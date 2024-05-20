@@ -71,14 +71,18 @@ end
 f[:, :, 1] == ax
 
 # ╔═╡ b6cfc533-eb09-44bc-b053-1bdd02431e84
-clean(l) =
-    @chain map(l) do x
-        isapprox(x, 0, atol = 1e-13) ? 0 : x
-    end begin
-		_ / @chain _ filter(!iszero, _) abs.() minimum
-		round.()
-		Int.()
+clean(l, rescale = false) = @chain l begin
+	map(_) do x
+		isapprox(0, x, atol=1e-13) ? 0 : x
 	end
+    if rescale
+		_ / @chain _ filter(!iszero, _) abs.() minimum
+	else
+		_
+	end
+    round.()
+    Int.()
+end
 
 # ╔═╡ 36e9a74d-ecc5-4722-a85b-b7a4d0d6fb9b
 begin
@@ -122,22 +126,22 @@ end
 
 # ╔═╡ 69a026f3-fd74-4c98-ac5a-293d574e1f50
 
-    d = @chain sols * nullspace(sols[1:2, :]) begin
-        reshape(165)
-        sym
-        clean
-		# _ / @chain _ filter(!iszero, _) abs.() minimum
-  #       round.()
-  #       Int.()
-    end
+d = @chain sols * nullspace(sols[1:2, :]) begin
+    reshape(165)
+    sym
+    clean(true)
+    # _ / @chain _ filter(!iszero, _) abs.() minimum
+    #       round.()
+    #       Int.()
+end
 
 
 # ╔═╡ a6f7ca11-194e-42db-aacb-97ac867ecba1
 function (⊗)(t, u)
     @chain t .* reshape(u, [fill(1, ndims(t) - 1); collect(size(u))]...) begin
-		eachslice(dims = ndims(t))
-		sum
-		
+        eachslice(dims = ndims(t))
+        sum
+
     end
 end
 
@@ -153,11 +157,11 @@ begin
     @syms α[] β[] γ[]
     x = [α[1], α[2], α[3], β[1], β[2], β[3], γ[1], γ[2], γ[3]]
     casimir = @chain d ⊗ x ⊗ x ⊗ x begin
-    	only
-		_
-		expand
-		simplify
-	end
+        only
+        _
+        expand
+        simplify
+    end
 end
 
 # ╔═╡ 2ab1599d-2817-4737-a26a-b631284f2089
@@ -192,17 +196,17 @@ end
 
 # ╔═╡ bf311b8e-7067-47b9-8878-3e6259942154
 function funtoadj(m)
-	[
-		m[1, 1] |> imag
-		m[2, 2] |> imag
-		m[3, 3] |> imag
-		m[2, 3] |> imag
-		m[3, 1] |> imag
-		m[1, 2] |> imag
-		m[2, 3] |> real
-		m[3, 1] |> real
-		m[1, 2] |> real
-	]
+    [
+        m[1, 1] |> imag
+        m[2, 2] |> imag
+        m[3, 3] |> imag
+        m[2, 3] |> imag
+        m[3, 1] |> imag
+        m[1, 2] |> imag
+        m[2, 3] |> real
+        m[3, 1] |> real
+        m[1, 2] |> real
+    ]
 end
 
 # ╔═╡ a436e6cc-372c-4197-aa9d-8aafa0f08852
@@ -210,8 +214,14 @@ funtoadj.(λ)
 
 # ╔═╡ fc9dfbc1-b7b1-4cfb-b9f9-586f475dc662
 begin
-ff = hvcat(9, (reshape(funtoadj(λ[i] * λ[j] - λ[j] * λ[i]), 1, 1, 9) for i = 1:9, j = 1:9)...)
-	ff = permutedims(ff, [3, 1, 2])
+    ff = hvcat(
+        9,
+        (
+            reshape(funtoadj(λ[i] * λ[j] - λ[j] * λ[i]), 1, 1, 9) for i = 1:9,
+            j = 1:9
+        )...,
+    )
+    ff = permutedims(ff, [3, 1, 2])
 end
 
 # ╔═╡ f2f0bb22-fffa-43ea-8923-61956a6f5f87
@@ -235,40 +245,50 @@ end
 
 # ╔═╡ 50366cda-3177-4b6c-beeb-f735ad13d0aa
 comb = @chain normal begin
-	nullspace
-	clean
+    nullspace
+    clean(true)
 end
 
 # ╔═╡ 536d73e8-f97a-4769-9052-5dc675bf2e75
 @chain [6d ⊗ y, Diagonal([fill(1, 3); fill(2, 6)]), fill(0, 9, 9)] begin
-	_ ⊗ nullspace(normal)
-	only
-	clean
-	_ ⊗ x ⊗ x
-	only
-	expand
-	simplify
+    _ ⊗ nullspace(normal)
+    only
+    clean(true)
+    _ ⊗ x ⊗ x
+    only
+    expand
+    simplify
 end
 
 # ╔═╡ fbb998ec-773c-424a-9054-78589c2b81ed
-c = [α[1] + α[2] + α[3], x .* [fill(1//2, 3); fill(1, 6)] ⊗ x |> only, casimir]
+c = [α[1] + α[2] + α[3], x .* [fill(1 // 2, 3); fill(1, 6)] ⊗ x |> only, casimir]
 
 # ╔═╡ e0a45fc3-7eb0-4f3f-a220-8c24f1385081
 @chain c begin
-	_ ⊗ comb
-	only
-	expand
-	simplify
+    _ ⊗ comb
+    only
+    expand
+    simplify
 end
 
 # ╔═╡ 8e49b1be-2deb-4740-941f-0e1bd7e0840b
-@chain exp(0.1*f[:, :, 4]) * y d ⊗ _ ⊗ _ ⊗ _
+@chain exp(0.1 * f[:, :, 4]) * y d ⊗ _ ⊗ _ ⊗ _
 
 # ╔═╡ 182c7c1b-b445-47da-bd95-cab44c87bb1f
 d ⊗ y ⊗ y ⊗ y
 
 # ╔═╡ f474365e-7cab-4c8d-9c9f-41d0cb79a92b
-[@chain f[:, :, i] * pi / 4 exp _ * y for i in 1:9]
+map([
+    f[:, :, 4] / 2,
+    (f[:, :, 4] + f[:, :, 8]) / sqrt(2),
+    f[:, :, 8] / 2,
+    (f[:, :, 4] - f[:, :, 8]) / sqrt(2),
+]) do t
+    @chain t * pi / 2 exp _ * y clean(true)
+end
+
+# ╔═╡ b5dd78ea-bab2-480e-ae94-2555344bfb5d
+f[:, 1, 6] - f[:, 2, 6], f[:, 1, 9] - f[:, 2, 9], f[:, 6, 9], f[:, 3, 6], f[:, 3, 9]
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1119,5 +1139,6 @@ version = "17.4.0+2"
 # ╠═8e49b1be-2deb-4740-941f-0e1bd7e0840b
 # ╠═182c7c1b-b445-47da-bd95-cab44c87bb1f
 # ╠═f474365e-7cab-4c8d-9c9f-41d0cb79a92b
+# ╠═b5dd78ea-bab2-480e-ae94-2555344bfb5d
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

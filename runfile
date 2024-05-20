@@ -1,6 +1,12 @@
-fmt() {
+#!/bin/bash
+
+function fmt {
   julia <<EOF
     using JuliaFormatter
     format(".", indent = 4, margin = 85)
 EOF
+}
+
+function atlas {
+	for n in $(seq 1 $1); do ./geng $n; done >atlas.g6
 }

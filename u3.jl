@@ -72,14 +72,14 @@ f[:, :, 1] == ax
 
 # ╔═╡ b6cfc533-eb09-44bc-b053-1bdd02431e84
 clean(l, rescale = false) = @chain l begin
-	map(_) do x
-		isapprox(0, x, atol=1e-13) ? 0 : x
-	end
+    map(_) do x
+        isapprox(0, x, atol = 1e-13) ? 0 : x
+    end
     if rescale
-		_ / @chain _ filter(!iszero, _) abs.() minimum
-	else
-		_
-	end
+        _ / @chain _ filter(!iszero, _) abs.() minimum
+    else
+        _
+    end
     round.()
     Int.()
 end

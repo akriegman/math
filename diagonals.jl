@@ -6,11 +6,11 @@ using InteractiveUtils
 
 # ╔═╡ 49c411bc-16c2-11ef-109f-2fa826165f6a
 begin
-	using Graphs
-	using Plots
-	using GraphRecipes
-	using Chain
-	using GraphIO: Graph6.Graph6Format
+    using Graphs
+    using Plots
+    using GraphRecipes
+    using Chain
+    using GraphIO: Graph6.Graph6Format
 end
 
 # ╔═╡ ef7f1723-eef8-4f4a-8a56-e2edc3449252
@@ -20,8 +20,8 @@ atlas = @chain loadgraphs("atlas.g6", Graph6Format()) values collect
 # for g in atlas
 # let g = atlas[1]
 invariants = map(atlas) do g
-	n = nv(g)
-	@chain g Graphs.sparse Ref(_) .^ (1:n) [[_[i][j,j] for i in 1:n] for j in 1:n] sort hash _ => g
+    n = nv(g)
+    @chain g Graphs.sparse Ref(_) .^ (1:n) [[_[i][j, j] for i = 1:n] for j = 1:n] sort hash _ => g
 end
 
 # ╔═╡ 9ce2e112-3aad-46b2-b4e8-15a16959deee
@@ -33,7 +33,7 @@ end
 # for f in 0:10
 let f = 0
 	chunk = @chain loadgraphs("atlas" * lpad(f, 2, "0"), Graph6Format()) values collect
-	
+
 end
   ╠═╡ =#
 

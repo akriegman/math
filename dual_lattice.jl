@@ -6,47 +6,47 @@ using InteractiveUtils
 
 # ╔═╡ 73e34c58-09a7-11ef-2feb-5fc2b5b70bef
 begin
-	using Luxor
+    using Luxor
 end
 
 # ╔═╡ d4964fb4-6785-4669-b1bd-c0f70b2dc0ea
 begin
-	o = Point(0, 0)
-	n = 3
+    o = Point(0, 0)
+    n = 3
 end
 
 # ╔═╡ ea161d60-5681-4afe-8d49-097b0d966a23
 @svg begin
-	scale(80)
-	for x in -n:n, y in -n:n
-		if gcd(x, y) > 1
-			continue
-		end
-		circle(o, Point(x, y))
-		#arc2r(Point(x/2, y/2), Point(x/2 + y/2, y/2 - x/2), Point(x/2 - y/2, y/2 + x/2))
-		strokepath()
-	end
+    scale(80)
+    for x = -n:n, y = -n:n
+        if gcd(x, y) > 1
+            continue
+        end
+        circle(o, Point(x, y))
+        #arc2r(Point(x/2, y/2), Point(x/2 + y/2, y/2 - x/2), Point(x/2 - y/2, y/2 + x/2))
+        strokepath()
+    end
 end
 
 # ╔═╡ d028e003-6eb8-4961-99d1-030530cfb068
 @svg begin
-	scale(140)
-	for x in -n:n, y in -n:n
-		(d, u, v) = gcdx(x, y)
-		if d != 1
-			continue
-		end
-		a = Point(u - y ÷ d, v + x ÷ d)
-		b = Point(u, v)
-		c = Point(u + y ÷ d, v - x ÷ d)
-		p = a.x^2 + a.y^2 > c.x^2 + c.y^2 ? c : a
-		if x*y == 0
-			line(a, c)
-		else
-			line(b, p)
-		end
-		strokepath()
-	end
+    scale(140)
+    for x = -n:n, y = -n:n
+        (d, u, v) = gcdx(x, y)
+        if d != 1
+            continue
+        end
+        a = Point(u - y ÷ d, v + x ÷ d)
+        b = Point(u, v)
+        c = Point(u + y ÷ d, v - x ÷ d)
+        p = a.x^2 + a.y^2 > c.x^2 + c.y^2 ? c : a
+        if x * y == 0
+            line(a, c)
+        else
+            line(b, p)
+        end
+        strokepath()
+    end
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001

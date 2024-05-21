@@ -13,8 +13,11 @@ begin
     using GraphIO: Graph6.Graph6Format
 end
 
+# ╔═╡ d519a5a9-83b9-4d27-862d-832f3bb595b9
+using StatsBase
+
 # ╔═╡ ef7f1723-eef8-4f4a-8a56-e2edc3449252
-atlas = @chain loadgraphs("atlas.g6", Graph6Format()) values collect
+atlas = @chain loadgraphs("reg_10_4.g6", Graph6Format()) values collect
 
 # ╔═╡ 504348d7-b882-451e-9fac-efceccbac92f
 # for g in atlas
@@ -26,6 +29,26 @@ end
 
 # ╔═╡ 9ce2e112-3aad-46b2-b4e8-15a16959deee
 (@chain invariants first.() unique length) == (@chain invariants first.() length)
+
+# ╔═╡ a6f862cb-ea11-4d34-9a17-42e650a1ae45
+exceptions = @chain invariants first.() countmap filter(!isequal(1) ∘ last, _) collect first.() filter(pair -> first(pair) in _, invariants) last.()
+
+# ╔═╡ 228fdb21-1b01-469c-9c68-4d7a84ded8e0
+# 0x609c4acdd33d5ab0
+# 0x6e34060c823c96bf
+@chain invariants filter(isequal(0x609c4acdd33d5ab0) ∘ first, _) last.() graphplot.(_, curves=false) plot(_...)
+
+# ╔═╡ 1208566e-ca82-4442-93af-ad156247ff17
+@chain invariants filter(isequal(0x609c4acdd33d5ab0) ∘ first, _) last.() adjacency_matrix.()
+
+# ╔═╡ 31e579cf-cfe2-4f8f-8fb6-30fef8ff3771
+function powerdiagonals(g)
+	n = nv(g)
+    @chain g Graphs.sparse Ref(_) .^ (1:n) [[_[i][j, j] for i = 1:n] for j = 1:n] sort hcat(_...)
+end
+
+# ╔═╡ 6822eba3-c55b-45cd-a233-44f31b1d08f3
+powerdiagonals.(exceptions)
 
 # ╔═╡ be88deed-b6ea-404b-a9f1-e17949079555
 # ╠═╡ disabled = true
@@ -45,6 +68,7 @@ GraphIO = "aa1b3936-2fda-51b9-ab35-c553d3a640a2"
 GraphRecipes = "bd48cda9-67a9-57be-86fa-5b3c104eda73"
 Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 Chain = "~0.6.0"
@@ -52,6 +76,7 @@ GraphIO = "~0.7.0"
 GraphRecipes = "~0.5.12"
 Graphs = "~1.9.0"
 Plots = "~1.40.1"
+StatsBase = "~0.34.2"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -60,7 +85,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.1"
 manifest_format = "2.0"
-project_hash = "b0a14469a7a584a6e13bb3415f336765ce17c0bb"
+project_hash = "61e27eed4532b07e5c8478d35d1f55e9ad31338d"
 
 [[deps.AbstractTrees]]
 git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
@@ -1348,6 +1373,12 @@ version = "1.4.1+1"
 # ╠═ef7f1723-eef8-4f4a-8a56-e2edc3449252
 # ╠═504348d7-b882-451e-9fac-efceccbac92f
 # ╠═9ce2e112-3aad-46b2-b4e8-15a16959deee
+# ╠═d519a5a9-83b9-4d27-862d-832f3bb595b9
+# ╠═a6f862cb-ea11-4d34-9a17-42e650a1ae45
+# ╠═228fdb21-1b01-469c-9c68-4d7a84ded8e0
+# ╠═1208566e-ca82-4442-93af-ad156247ff17
+# ╠═31e579cf-cfe2-4f8f-8fb6-30fef8ff3771
+# ╠═6822eba3-c55b-45cd-a233-44f31b1d08f3
 # ╠═be88deed-b6ea-404b-a9f1-e17949079555
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

@@ -1,0 +1,61 @@
+{
+	"cell_id": 1719654548909102792,
+	"cells": [
+		{
+			"cell_id": 5778996640639502681,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 398272970011956496,
+					"cell_origin": "server",
+					"cell_type": "error",
+					"source": "{\\color{red}{\\begin{verbatim}SyntaxError: invalid syntax (<string>, line 2)\\end{verbatim}}}"
+				}
+			],
+			"source": "from cdb.relativity.abstract import *;"
+		},
+		{
+			"cell_id": 15872774776161342324,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 9937443921861052827,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"source": "\\begin{dmath*}{}\\text{Property Indices(position=fixed) attached to~}\\left[a, \\discretionary{}{}{}b, \\discretionary{}{}{}c, \\discretionary{}{}{}d, \\discretionary{}{}{}k, \\discretionary{}{}{}l, \\discretionary{}{}{}m, \\discretionary{}{}{}n\\right].\\end{dmath*}"
+				}
+			],
+			"source": "{a,b,c,d,k,l,m,n}::Indices(position=fixed);"
+		},
+		{
+			"cell_id": 17066110454956394028,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"source": ""
+		},
+		{
+			"cell_id": 17641261581140061685,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 11636041500367741501,
+					"cell_origin": "server",
+					"cell_type": "error",
+					"source": "{\\color{red}{\\begin{verbatim}NameError: name 'riemann_to_ricci' is not defined\n\nAt:\n  Notebook Cell (Line 1): _ = riemann_to_ricci(_); display(_)\n\\end{verbatim}}}"
+				}
+			],
+			"source": "riemann_to_ricci(_);"
+		},
+		{
+			"cell_id": 572916994865537695,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"source": ""
+		}
+	],
+	"description": "Cadabra JSON notebook format",
+	"version": 1.0
+}

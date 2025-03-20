@@ -1,0 +1,149 @@
+{
+	"cell_id": 1719654548909102792,
+	"cells": [
+		{
+			"cell_id": 15872774776161342324,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 6357799265763533987,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"source": "\\begin{dmath*}{}\\text{Property Indices(position=independent) attached to~}\\left[a, \\discretionary{}{}{}b, \\discretionary{}{}{}c, \\discretionary{}{}{}d, \\discretionary{}{}{}k, \\discretionary{}{}{}l, \\discretionary{}{}{}m, \\discretionary{}{}{}n\\right].\\end{dmath*}"
+				}
+			],
+			"source": "{a,b,c,d,k,l,m,n}::Indices(position=independent);"
+		},
+		{
+			"cell_id": 5233273994043080346,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 14551040147548543442,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"source": "\\begin{dmath*}{}\\text{Property Metric attached to~}g_{a b}.\\end{dmath*}"
+				}
+			],
+			"source": "g_{a b}::Metric;"
+		},
+		{
+			"cell_id": 10284669158825539423,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 17828390509994933333,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"cells": [
+						{
+							"cell_id": 12969623536640453622,
+							"cell_origin": "server",
+							"cell_type": "input_form",
+							"source": "F_{a b} = \\partial_{a} A_{b}-\\partial_{b} A_{a}"
+						}
+					],
+					"source": "\\begin{dmath*}{}F_{a b} = \\partial_{a} A_{b}\\discretionary{}{}{}-\\partial_{b} A_{a}\\end{dmath*}"
+				}
+			],
+			"source": "r := F_{a b} = \\partial_a A_b - \\partial_b A_a;"
+		},
+		{
+			"cell_id": 3609320943749615905,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"source": "#\\Gamma^{a}_{b c}::TableauSymmetry(shape={2}, indices={1,2});"
+		},
+		{
+			"cell_id": 14524425900273183267,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 10746439497651834480,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"source": "\\begin{dmath*}{}\\text{Property PartialDerivative attached to~}\\backslash\\texttt{partial}\\{\\#\\}.\\end{dmath*}"
+				}
+			],
+			"source": "{\\partial{#}}::PartialDerivative;"
+		},
+		{
+			"cell_id": 4849234272148680773,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 6513813563781657925,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"cells": [
+						{
+							"cell_id": 18340571247147089392,
+							"cell_origin": "server",
+							"cell_type": "input_form",
+							"source": "\\Gamma^{a}_{b c} =  1/2 g^{a d} (\\partial_{c}(g_{b d}) + \\partial_{b}(g_{c d})-\\partial_{d}(g_{b c}))"
+						}
+					],
+					"source": "\\begin{dmath*}{}\\Gamma^{a}\\,_{b c} = \\frac{1}{2}g^{a d} \\left(\\partial_{c}{g_{b d}}\\discretionary{}{}{}+\\partial_{b}{g_{c d}}\\discretionary{}{}{}-\\partial_{d}{g_{b c}}\\right)\\end{dmath*}"
+				}
+			],
+			"source": "lcc := \\Gamma^a_{b c} = 1/2 g^{a d} (\\partial_{c}{g_{b d}} + \\partial_{b}{g_{c d}} - \\partial_{d}{g_{b c}});"
+		},
+		{
+			"cell_id": 11398472787402085699,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 1226002209003256533,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"cells": [
+						{
+							"cell_id": 16339176693908408808,
+							"cell_origin": "server",
+							"cell_type": "input_form",
+							"source": "R^{a} _{b c d} = \\partial_{c}(\\Gamma^{a}_{b d})-\\partial_{d}(\\Gamma^{a}_{b c}) + \\Gamma^{a}_{c k} \\Gamma^{k}_{b d}-\\Gamma^{a}_{d k} \\Gamma^{k}_{b c}"
+						}
+					],
+					"source": "\\begin{dmath*}{}R^{a} _{b c d} = \\partial_{c}{\\Gamma^{a}\\,_{b d}}\\discretionary{}{}{}-\\partial_{d}{\\Gamma^{a}\\,_{b c}}\\discretionary{}{}{}+\\Gamma^{a}\\,_{c k} \\Gamma^{k}\\,_{b d}\\discretionary{}{}{}-\\Gamma^{a}\\,_{d k} \\Gamma^{k}\\,_{b c}\\end{dmath*}"
+				}
+			],
+			"source": "rmt := R^a_{b c d} = \\partial_c{\\Gamma^a_{b d}} - \\partial_d{\\Gamma^a_{b c}} +\n\\Gamma^a_{c k} \\Gamma^k_{b d} - \\Gamma^a_{d k} \\Gamma^k_{b c};"
+		},
+		{
+			"cell_id": 16149375029031477352,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"cells": [
+				{
+					"cell_id": 11396020501292996045,
+					"cell_origin": "server",
+					"cell_type": "latex_view",
+					"cells": [
+						{
+							"cell_id": 1413420284644669576,
+							"cell_origin": "server",
+							"cell_type": "input_form",
+							"source": "R^{a} _{b c d} = \\partial_{c}(\\Gamma^{a}_{b d})-\\partial_{d}(\\Gamma^{a}_{b c}) + \\Gamma^{a}_{c k} \\Gamma^{k}_{b d}-\\Gamma^{a}_{d k} \\Gamma^{k}_{b c}"
+						}
+					],
+					"source": "\\begin{dmath*}{}R^{a} _{b c d} = \\partial_{c}{\\Gamma^{a}\\,_{b d}}\\discretionary{}{}{}-\\partial_{d}{\\Gamma^{a}\\,_{b c}}\\discretionary{}{}{}+\\Gamma^{a}\\,_{c k} \\Gamma^{k}\\,_{b d}\\discretionary{}{}{}-\\Gamma^{a}\\,_{d k} \\Gamma^{k}\\,_{b c}\\end{dmath*}"
+				}
+			],
+			"source": "canonicalise(_);"
+		},
+		{
+			"cell_id": 17641261581140061685,
+			"cell_origin": "client",
+			"cell_type": "input",
+			"source": ""
+		}
+	],
+	"description": "Cadabra JSON notebook format",
+	"version": 1.0
+}
